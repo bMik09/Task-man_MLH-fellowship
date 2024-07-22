@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasks</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <h1>Tasks</h1>
+  <form action="/tasks/add" method="POST">
+    <input type="text" name="title" placeholder="New task" required>
+    <button type="submit">Add Task</button>
+  </form>
+  <ul>
+    <% tasks.forEach(task => { %>
+      <li>
+        <%= task.title %>
+        <% if (!task.completed) { %>
+          <form action="/tasks/complete/<%= task.id %>" method="POST" style="display:inline;">
+            <button type="submit">Complete</button>
+          </form>
+        <% } else { %>
+          (Completed)
+        <% } %>
+      </li>
+    <% }) %>
+  </ul>
+  <a href="/">Home</a>
+</body>
+</html>
