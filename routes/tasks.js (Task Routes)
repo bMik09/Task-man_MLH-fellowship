@@ -1,0 +1,32 @@
+const express = require('express');
+const router = express.Router();
+
+let tasks = [
+  { id: 1, title: 'Learn JavaScript', completed: false },
+  { id: 2, title: 'Build a web app', completed: false }
+];
+
+router.get('/', (req, res) => {
+  res.render('tasks', { tasks });
+});
+
+router.post('/add', (req, res) => {
+  const newTask = {
+    id: tasks.length + 1,
+    title: req.body.title,
+    completed: false
+  };
+  tasks.push(newTask);
+  res.redirect('/tasks');
+});
+
+router.post('/complete/:id', (req, res) => {
+  const taskId = parseInt(req.params.id);
+  const task = tasks.find(t => t.id === taskId);
+  if (task) {
+    task.completed = true;
+  }
+  res.redirect('/tasks');
+});
+
+module.exports = router;
